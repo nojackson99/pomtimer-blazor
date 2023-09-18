@@ -69,10 +69,6 @@
       "PackagePath": "staticwebassets/index.html"
     },
     {
-      "Id": "/Users/noah.jackson/repos/pomtimer-blazor/Source/PomTimer.Client/wwwroot/sample-data/weather.json",
-      "PackagePath": "staticwebassets/sample-data/weather.json"
-    },
-    {
       "Id": "obj/Debug/net7.0/staticwebassets/msbuild.PomTimer.Client.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

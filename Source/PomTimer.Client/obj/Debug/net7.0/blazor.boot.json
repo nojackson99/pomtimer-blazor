@@ -198,13 +198,13 @@
       "mscorlib.dll": "sha256-Xo3wdLenBZ41X73hGjkWTbEQZDKcQsnPFtlkePUxLY0=",
       "netstandard.dll": "sha256-qjqaAEP3hdLnU\/TnoCd8HaSa+0ruV1TpdaB2GUujGMw=",
       "System.Private.CoreLib.dll": "sha256-\/7uQ+eNo9u3H1mpgMko4D3tKZHeGRfsRjna0Dqsu62k=",
-      "PomTimer.Client.dll": "sha256-2meelcCmKIIw24jPsMjq+m1\/RRr0\/ZFPdkye11Y57no="
+      "PomTimer.Client.dll": "sha256-yIAFNkluQWcqRZT3lDqMP4ybLJJr13hIz+9NApSaCkE="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "PomTimer.Client.pdb": "sha256-DNg46BDNA0ZugLl\/eU7vbXPwFSbbw3wK94G3etAep\/Q="
+      "PomTimer.Client.pdb": "sha256-\/IMNBsolYNWQXzTlJhBJ9xvm47ZHLntq3lRz2Dpf69c="
     },
     "runtime": {
       "dotnet.7.0.10.qzqqcbpj57.js": "sha256-qJB30QURoyH3y3WyayHu6nMFIx2XNOkXCez7tagGpvE=",
