@@ -480,3 +480,4 @@ $RECYCLE.BIN/
 *.dll
 *.dll.gz
 *.gz
+*.DS_Store

@@ -1,0 +1,8 @@
+button {
+	border-radius: 7px;
+	color: var(--main);
+	border: none;
+	transition: color 750ms ease-in-out;
+	cursor: pointer;
+	width: inherit;
+}

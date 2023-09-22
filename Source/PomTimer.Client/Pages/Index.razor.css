@@ -1,0 +1,9 @@
+.session-buttons-container {
+	display: flex;
+	justify-content: space-around;
+}
+
+.session-button {
+	font-size: 15px;
+	width: 180px;
+}

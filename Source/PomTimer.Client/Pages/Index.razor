@@ -1,9 +1,29 @@
 ﻿@page "/"
+@using PomTimer.Client.Shared.Components.PomTimerFlatButton
 
 <PageTitle>PomTimer</PageTitle>
 
 <h1>Welcome to PomTimer Blazor</h1>
 
 <div class='timer-container'>
+	<div class='session-buttons-container'>
+		<div class="session-button">
+			<PomTimerFlatButton Text="Pomodoro" OnClick="TestClick"/>
+		</div>
+		<div class="session-button">
+			<PomTimerFlatButton Text="Short Break" OnClick="TestClick"/>
 
+		</div>
+		<div class="session-button">
+			<PomTimerFlatButton Text="Long Break" OnClick="TestClick"/>
+		</div>
+	</div>
 </div>
+
+@code 
+{
+	private void TestClick()
+	{
+		Console.WriteLine("Test Click");
+	}
+}
