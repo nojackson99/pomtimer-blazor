@@ -15,5 +15,27 @@
 	height: 110px;
 	font-weight: bold;
 	position: relative;
-	top: 110px;
+	top: 85px;
+}
+
+.timer-button {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	top: 100px;
+	width: 200px;
+}
+
+.timer-button-container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.timer-container {
+	background-color: var(--accent);
+	border-radius: 35px;
+	height: 420px;
+	padding: 40px;
+	width: 700px;
 }

@@ -1,12 +1,14 @@
 ﻿@page "/"
+
 @using PomTimer.Client.Shared.Components.PomTimerFlatButton
+@using PomTimer.Client.Shared.Components.PomTimerAnimatedButton
 
 <PageTitle>PomTimer</PageTitle>
 
 <h1>Welcome to PomTimer Blazor</h1>
 
-<div class='timer-container'>
-	<div class='session-buttons-container'>
+<div class="timer-container">
+	<div class="session-buttons-container">
 		<div class="session-button">
 			<PomTimerFlatButton Text="Pomodoro" OnClick="TestClick"/>
 		</div>
@@ -20,6 +22,12 @@
 	<div class= "timer-display">
 		@* DEBUG will be replaced with variable *@
 		25:00
+	</div>
+	<div class= "timer-button-container">
+		<div class= "timer-button">
+		@* DEBUG replace text with variable *@
+		<PomTimerAnimatedButton Text="Start" OnClick="TestClick"/>
+		</div>
 	</div>
 </div>
 

@@ -147,11 +147,3 @@ main {
 	flex-direction: column;
 	height: 100vh;
 }
-
-.timer-container {
-	background-color: var(--accent);
-	border-radius: 35px;
-	height: 420px;
-	padding: 40px;
-	width: 700px;
-}
