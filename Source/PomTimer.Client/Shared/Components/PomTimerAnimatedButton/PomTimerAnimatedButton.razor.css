@@ -1,17 +1,17 @@
 button {
-	display: inline-block;
-	padding: 15px 25px;
-	font-size: 24px;
-	cursor: pointer;
-	text-align: center;
-	text-decoration: none;
-	outline: none;
-	color: var(--main);
 	background-color: white;
 	border: none;
 	border-radius: 15px;
 	box-shadow: 0 9px #999;
+	color: var(--main);
+	cursor: pointer;
+	display: inline-block;
+	font-size: 24px;
 	font-weight: bold;
+	outline: none;
+	padding: 15px 25px;
+	text-align: center;
+	text-decoration: none;
 	transition: color 750ms ease-in-out;
 	width: inherit;
 }
