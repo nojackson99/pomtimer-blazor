@@ -4,7 +4,7 @@
 }
 
 .session-button {
-	font-size: 15px;
+	font-size: 16px;
 	width: 180px;
 }
 
@@ -37,5 +37,13 @@
 	border-radius: 35px;
 	height: 420px;
 	padding: 40px;
-	width: 700px;
+	width: 650px;
+}
+
+.active-task-container {
+	width: 100%;
+	text-align: center;
+	position: relative;
+	top: 130px;
+	color: #c0c0c0;
 }
