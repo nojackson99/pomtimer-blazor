@@ -3,6 +3,8 @@
 @using PomTimer.Client.Shared.Components.PomTimerFlatButton
 @using PomTimer.Client.Shared.Components.PomTimerAnimatedButton
 
+@inject IJSRuntime JSRuntime
+
 <PageTitle>PomTimer</PageTitle>
 
 <h1>Welcome to PomTimer Blazor</h1>
@@ -34,10 +36,27 @@
 	</div>
 </div>
 
+<PomTimerAnimatedButton Text="test easy timer" OnClick="CallEasyTimerTest"/>
+<PomTimerAnimatedButton Text="test interop" OnClick="CallTestInterop"/>
+
 @code 
 {
 	private void TestClick()
 	{
 		Console.WriteLine("Test Click");
+	}
+
+	private async Task CallEasyTimerTest()
+	{
+		string message = "testing easy timer with js interop";
+		await JSRuntime.InvokeVoidAsync("testTimer", message);
+
+		return;
+	}
+
+	private async Task CallTestInterop()
+	{
+		string message = "I'm executing this alert with js interop!";
+		await JSRuntime.InvokeVoidAsync("testInterop", message);
 	}
 }

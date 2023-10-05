@@ -1,0 +1,20 @@
+{
+	"name": "npmjs",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build:dev": "webpack --mode development",
+		"build:prod": "webpack --mode production",
+		"webpack:help": "webpack --help"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"webpack": "^5.88.2",
+		"webpack-cli": "^5.1.4"
+	},
+	"dependencies": {
+		"easytimer.js": "^4.6.0"
+	}
+}
