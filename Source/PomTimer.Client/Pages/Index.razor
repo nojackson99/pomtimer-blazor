@@ -3,8 +3,6 @@
 @using PomTimer.Client.Shared.Components.PomTimerFlatButton
 @using PomTimer.Client.Shared.Components.PomTimerAnimatedButton
 
-@inject IJSRuntime JSRuntime
-
 <PageTitle>PomTimer</PageTitle>
 
 <h1>Welcome to PomTimer Blazor</h1>
@@ -12,50 +10,25 @@
 <div class="timer-container">
 	<div class="session-buttons-container">
 		<div class="session-button">
-			<PomTimerFlatButton Text="Pomodoro" OnClick="TestClick"/>
+			<PomTimerFlatButton Text="Pomodoro"/>
 		</div>
 		<div class="session-button">
-			<PomTimerFlatButton Text="Short Break" OnClick="TestClick"/>
+			<PomTimerFlatButton Text="Short Break"/>
 		</div>
 		<div class="session-button">
-			<PomTimerFlatButton Text="Long Break" OnClick="TestClick"/>
+			<PomTimerFlatButton Text="Long Break"/>
 		</div>
 	</div>
 	<div class="timer-display">
-		@* DEBUG will be replaced with variable *@
-		25:00
+		@timerDisplayText
 	</div>
 	<div class= "timer-button-container">
 		<div class= "timer-button">
 		@* DEBUG replace text with variable *@
-		<PomTimerAnimatedButton Text=@_timerActionText OnClick="JsHandleTimerAction"/>
+		<PomTimerAnimatedButton Text=@timerActionText OnClick="JsHandleTimerAction"/>
 		</div>
 	</div>
 	<div class= "active-task-container">
 		No active task
 	</div>
 </div>
-
-@code 
-{
-	private string _timerActionText = "Start";
-	
-	private void TestClick()
-	{
-		Console.WriteLine("Test Click");
-	}
-
-	private async Task JsHandleTimerAction()
-	{
-		_timerActionText = new(await JSRuntime.InvokeAsync<string>("handleTimerAction"));
-	}
-
-	@*  //* This is an example of how to use JS interop
-		private async Task CallEasyTimerTest()
-	{
-		string message = "testing easy timer with js interop";
-		await JSRuntime.InvokeVoidAsync("testTimer", message);
-
-		return;
-	} *@
-}

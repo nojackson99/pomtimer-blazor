@@ -1,47 +1,38 @@
 import Timer from 'easytimer.js';
 
-//* This is a example function testing JS interop with easytimer.js
-// window.testTimer = (message) => {
-// 	console.log(message);
-
-// 	const timer = new Timer();
-// 	timer.start();
-
-// 	timer.addEventListener('secondsUpdated', function (e) {
-// 		console.log(timer.getTimeValues().toString());
-// 	});
-
-// 	return;
-// };
-
 var timer = null;
+var indexRef = null;
 
+window.setIndexReference = (ref) => {
+	indexRef = ref;
+};
+
+// Start timer and set event listener to send values to C# side.
 window.startTimer = () => {
-	console.log('Starting timer...');
-
 	timer = new Timer();
 	timer.start({ countdown: true, startValues: { minutes: 25 } });
 
 	timer.addEventListener('secondsUpdated', function (e) {
-		console.log(timer.getTimeValues().toString());
+		window.sendTimerValue(timer.getTimeValues());
 	});
 };
 
+// Start stop and resume the timer.
 window.handleTimerAction = () => {
 	if (!timer) {
 		window.startTimer();
-
 		return 'Pause';
 	}
 	if (timer.isRunning()) {
-		console.log('Pausing timer...');
 		timer.pause();
-
 		return 'Resume';
 	} else {
-		console.log('Resuming timer...');
 		timer.start();
-
 		return 'Pause';
 	}
+};
+
+// Send timer value to C# side each second.
+window.sendTimerValue = (timerValue) => {
+	indexRef.invokeMethodAsync('ReceiveTimerValue', timerValue);
 };
