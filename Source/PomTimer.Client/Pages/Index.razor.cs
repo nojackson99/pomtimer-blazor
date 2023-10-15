@@ -5,33 +5,19 @@ using Microsoft.JSInterop;
 
 namespace PomTimer.Client.Pages;
 
-public partial class Index : IDisposable
+public partial class Index
 {
 	[Inject]
 	public required IJSRuntime JSRuntime { get; set; }
 	private string timerActionText = "Start";
 	private string timerDisplayText = "25:00";
-	private DotNetObjectReference<Index>? indexRef;
-
-	private TimerValue timerValue = new();
-
-	private class TimerValue
-	{
-		public string Hours { get; set; } = "0";
-		public string Minutes { get; set; } = "0";
-		public string Seconds { get; set; } = "0";
-	}
+	private IndexViewModel? ViewModel;
 	
 	protected override async Task OnInitializedAsync()
 	{
-		indexRef = DotNetObjectReference.Create(this);
-		await JSRuntime.InvokeVoidAsync("setIndexReference", indexRef);
+		ViewModel = new IndexViewModel(JSRuntime);
+		await ViewModel.JsSetIndexReference();
 	}
-
-	public void Dispose()
-    {
-        indexRef?.Dispose();
-    }
 
 	private async Task JsHandleTimerAction()
 	{
@@ -50,28 +36,28 @@ public partial class Index : IDisposable
 
 			if(root.TryGetProperty("hours", out JsonElement hours))
 			{
-				timerValue.Hours = hours.GetInt32().ToString();
+				ViewModel!.timerValue.Hours = hours.GetInt32().ToString();
 			}
 			if(root.TryGetProperty("minutes", out JsonElement minutes))
 			{
-				timerValue.Minutes = minutes.GetInt32().ToString();
+				ViewModel!.timerValue.Minutes = minutes.GetInt32().ToString();
 			}
 			if(root.TryGetProperty("seconds", out JsonElement seconds))
 			{
-				timerValue.Seconds = seconds.GetInt32().ToString();
+				ViewModel!.timerValue.Seconds = seconds.GetInt32().ToString();
 			}
 
 			//TODO []: set up logic to not display leading zeros
 			timerDisplayText = new StringBuilder()
-				.Append(timerValue.Minutes)
+				.Append(ViewModel!.timerValue.Minutes)
 				.Append(":")
-				.Append(timerValue.Seconds)
+				.Append(ViewModel!.timerValue.Seconds)
 				.ToString();
 
-			if(timerValue.Hours != "0")
+			if(ViewModel!.timerValue.Hours != "0")
 			{
 				timerDisplayText = new StringBuilder()
-					.Append(timerValue.Hours)
+					.Append(ViewModel.timerValue.Hours)
 					.Append(":")
 					.Append(timerDisplayText)
 					.ToString();
