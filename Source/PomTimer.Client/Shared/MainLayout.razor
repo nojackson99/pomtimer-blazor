@@ -1,5 +1,22 @@
 ﻿@inherits LayoutComponentBase
 
-<main class="pomodoro-theme">
+@inject ThemeService ThemeService
+
+<main class="@ThemeService.MainTheme">
 	@Body
 </main>
+
+@code
+{
+	protected override void OnInitialized()
+	{
+		@* Subscribe to OnThemeChange event in ThemeService *@
+		ThemeService.OnThemeChange += HandleThemeChanged;
+	}
+
+	@* Class is updated from Index, this method triggerse a rerender to show the updated theme *@
+	private void HandleThemeChanged()
+	{
+		StateHasChanged();
+	}
+}

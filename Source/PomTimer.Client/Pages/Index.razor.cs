@@ -7,19 +7,24 @@ namespace PomTimer.Client.Pages;
 
 public partial class Index : IDisposable
 {
+	public Index() {}
+	// [Inject]
+	// public ThemeService ThemeService { get; set; } = default!;
 	[Inject]
 	public required IJSRuntime JSRuntime { get; set; }
-	private string timerActionText = "Start";
-	private string timerDisplayText = "25:00";
 	private DotNetObjectReference<Index>? indexRef;
-
-	private TimerValue timerValue = new();
-
-	private class TimerValue
+	private string timerActionText { get; set; } = "Start";
+	public int timerInMinutes { get; set; } = 25;
+	public TimerValue timerValue { get; set; } = new("25:00");
+	public class TimerValue
 	{
+		public TimerValue(string displayText) {
+			DisplayText = displayText;
+		}
 		public string Hours { get; set; } = "0";
 		public string Minutes { get; set; } = "0";
 		public string Seconds { get; set; } = "0";
+		public string DisplayText { get; set;}
 	}
 	
 	protected override async Task OnInitializedAsync()
@@ -33,16 +38,14 @@ public partial class Index : IDisposable
         indexRef?.Dispose();
     }
 
-	private async Task JsHandleTimerAction()
-	{
-		timerActionText = new(await JSRuntime.InvokeAsync<string>("handleTimerAction"));
-	}
-
 	[JSInvokable]
 	public void ReceiveTimerValue(object timerValueObj)
 	{
 		//FIXME []: make this logic part of the TimerValue class
 		string timerValueString = JsonSerializer.Serialize(timerValueObj);
+		string? hoursString = null;
+		string? minutesString = null;
+		string? secondsString = null;
 
 		using (JsonDocument timerValueDoc = JsonDocument.Parse(timerValueString))
 		{
@@ -50,35 +53,81 @@ public partial class Index : IDisposable
 
 			if(root.TryGetProperty("hours", out JsonElement hours))
 			{
-				timerValue.Hours = hours.GetInt32().ToString();
+				hoursString = hours.GetInt32().ToString();
 			}
 			if(root.TryGetProperty("minutes", out JsonElement minutes))
 			{
-				timerValue.Minutes = minutes.GetInt32().ToString();
+				minutesString = minutes.GetInt32().ToString();
 			}
 			if(root.TryGetProperty("seconds", out JsonElement seconds))
 			{
-				timerValue.Seconds = seconds.GetInt32().ToString();
+				secondsString = seconds.GetInt32().ToString();
 			}
-
-			//TODO []: set up logic to not display leading zeros
-			timerDisplayText = new StringBuilder()
-				.Append(timerValue.Minutes)
-				.Append(":")
-				.Append(timerValue.Seconds)
-				.ToString();
-
-			if(timerValue.Hours != "0")
-			{
-				timerDisplayText = new StringBuilder()
-					.Append(timerValue.Hours)
-					.Append(":")
-					.Append(timerDisplayText)
-					.ToString();
-			}
-
-			
-			StateHasChanged();
 		}
+
+		ConstructTimerDisplay(hoursString, minutesString, secondsString);
+	}
+
+	private void ConstructTimerDisplay(
+		string? hours, 
+		string? minutes, 
+		string? seconds
+	)
+	{
+		if(seconds!.Length < 2) {
+			seconds = new StringBuilder()
+				.Append("0")
+				.Append(seconds)
+				.ToString();
+		}
+
+		//TODO []: set up logic to not display leading zeros
+		timerValue.DisplayText = new StringBuilder()
+			.Append(minutes)
+			.Append(":")
+			.Append(seconds)
+			.ToString();
+
+		if(hours != "0")
+		{
+			timerValue.DisplayText = new StringBuilder()
+				.Append(hours)
+				.Append(":")
+				.Append(timerValue.DisplayText)
+				.ToString();
+		}
+		StateHasChanged();
+	}
+
+	private async Task JsHandleTimerAction()
+	{
+		timerActionText = new(await JSRuntime.InvokeAsync<string>("handleTimerAction", timerInMinutes));
+	}
+
+	private void OnPomodoro() {
+		timerInMinutes = 25;
+		ThemeService.MainTheme = "pomodoro-theme";
+		ConstructTimerDisplay("0", timerInMinutes.ToString(), "0");
+		ResetTimer();
+	}
+
+	private void OnShortBreak() {
+		timerInMinutes = 5;
+		ThemeService.MainTheme = "short-break-theme";
+		ConstructTimerDisplay("0", timerInMinutes.ToString(), "0");
+		ResetTimer();
+	}
+
+	private void OnLongBreak() {
+		timerInMinutes = 15;
+		ThemeService.MainTheme = "long-break-theme";
+		ConstructTimerDisplay("0", timerInMinutes.ToString(), "0");
+		ResetTimer();
+	}
+
+	private async void ResetTimer() {
+		await JSRuntime.InvokeVoidAsync("stopTimer");
+		timerActionText = "Start";
+		StateHasChanged();
 	}
 }

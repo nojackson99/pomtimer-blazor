@@ -8,19 +8,29 @@ window.setIndexReference = (ref) => {
 };
 
 // Start timer and set event listener to send values to C# side.
-window.startTimer = () => {
+window.startTimer = (timerInMinutes) => {
 	timer = new Timer();
-	timer.start({ countdown: true, startValues: { minutes: 25 } });
+	timer.start({ countdown: true, startValues: { minutes: timerInMinutes } });
 
 	timer.addEventListener('secondsUpdated', function (e) {
 		window.sendTimerValue(timer.getTimeValues());
 	});
 };
 
+window.stopTimer = () => {
+	console.log('in stopTimer');
+	console.log(timer);
+	if (timer) {
+		console.log('in stopTimer if');
+		timer.stop();
+		timer = null;
+	}
+};
+
 // Start stop and resume the timer.
-window.handleTimerAction = () => {
+window.handleTimerAction = (timerInMinutes) => {
 	if (!timer) {
-		window.startTimer();
+		window.startTimer(timerInMinutes);
 		return 'Pause';
 	}
 	if (timer.isRunning()) {
