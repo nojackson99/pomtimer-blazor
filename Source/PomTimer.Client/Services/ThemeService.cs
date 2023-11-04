@@ -4,7 +4,7 @@ public class ThemeService
 {
 	// Creates an event that can be subscribed to by other classes
 	// The event is invoked when the theme changes
-	// TODO[]: setup theme change animation
+	// TODO []: setup theme change animation
 	public event Action? OnThemeChange;
 
 	private string mainTheme = "pomodoro-theme";
