@@ -1,15 +1,17 @@
 import Timer from 'easytimer.js';
 
 var timer = null;
-var indexRef = null;
+var timerServiceRef = null;
 
-window.setIndexReference = (ref) => {
-	indexRef = ref;
+window.setTimerServiceReference = (ref) => {
+	timerServiceRef = ref;
 };
 
 // Start timer and set event listener to send values to C# side.
-window.startTimer = (timerInMinutes) => {
+window.startTimer = (timerInSeconds) => {
 	timer = new Timer();
+
+	let timerInMinutes = timerInSeconds / 60;
 	timer.start({ countdown: true, startValues: { minutes: timerInMinutes } });
 
 	timer.addEventListener('secondsUpdated', function (e) {
@@ -44,5 +46,5 @@ window.handleTimerAction = (timerInMinutes) => {
 
 // Send timer value to C# side each second.
 window.sendTimerValue = (timerValue) => {
-	indexRef.invokeMethodAsync('ReceiveTimerValue', timerValue);
+	timerServiceRef.invokeMethodAsync('ReceiveTimerValue', timerValue);
 };
